@@ -1,36 +1,21 @@
-name: Build XMRig APK
+name: Test Artifact
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: 11
-          distribution: 'temurin'
+      - name: Create test file
+        run: echo "hello" > test.txt
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v2
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew assembleRelease
-
-      - name: Upload APK
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: xmrig-apk
-          path: ./app/build/outputs/apk/release/
+          name: test-artifact
+          path: test.txt
