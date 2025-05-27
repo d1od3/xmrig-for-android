@@ -1,21 +1,23 @@
-name: Test Artifact
+name: Build XMRig Android
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout repo
+      uses: actions/checkout@v2
 
-      - name: Create test file
-        run: echo "hello" > test.txt
+    - name: Setup Java
+      uses: actions/setup-java@v1
+      with:
+        java-version: '11'
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-artifact
-          path: test.txt
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: output
+        path: ./build/output.apk
