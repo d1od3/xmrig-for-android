@@ -1,4 +1,4 @@
-name: Build XMRig Android
+name: Build APK
 
 on:
   workflow_dispatch:
@@ -6,9 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repo
+    - name: Checkout
       uses: actions/checkout@v2
 
     - name: Setup Java
@@ -16,8 +15,13 @@ jobs:
       with:
         java-version: '11'
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: output
-        path: ./build/output.apk
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y unzip curl git openjdk-11-jdk
+
+    - name: Build APK
+      run: ./build.sh # или твоя сборочная команда
+
+    - name: Archive (альтернатива upload-artifact)
+      run: zip -r xmrig.apk.zip ./путь_к_apk
