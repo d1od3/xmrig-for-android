@@ -31,7 +31,7 @@ jobs:
         ./build-release.sh
 
     - name: Upload built APK
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: xmrig-android-apk
-        path: ./output/*.apk
+        path: ./app/build/outputs/apk/release/*.apk
